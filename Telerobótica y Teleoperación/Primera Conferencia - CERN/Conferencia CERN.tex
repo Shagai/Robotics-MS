@@ -1,0 +1,123 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % Spanish language/hyphenation
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+
+\usepackage{cite} % para contraer referencias
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	%\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	%\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Conferencia de Robots en el CERN \\ % The assignment title
+	%\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	\maketitle
+	
+	La Organización Europea para la Investigación Nuclear, conocida como CERN, está situado en Ginebra, Suiza, su misión es permitir la colaboración internacional en la investigación del campo de la física de partículas de altas energías. Para ello tiene construidos y opera aceleradores de partículas, y cuenta con la participación de más de 10.000 científicos de institutos de investigación a lo largo de todo el mundo. \\
+	
+	El principal acelerador de partículas del CERN es el Gran Colisionador de Hadrones, LHC (Large Hadron Collider); es el  más grande del mundo, con 27 km de circunferencia, y el más energético, acelerando dos haces de protones (también iones pesados) hasta chocarlos con una energía de 14 TeV (7 TeV por haz). Los primeros haces de partículas fueron inyectados el 1 de agosto de 2008, y el primer intento para hacerlos circular por toda la trayectoria del colisionador se produjo el 10 de Septiembre de 2008, pero tuvo que pararse durante un año por una importante avería ocasionada por un fallo eléctrico que condujo a un pérdida de 6 toneladas de helio líquido empleados para la refrigeración de los imanes superconductores, acabando dañados más de 50 imanes superconductores\cite{ACCIDENT}.\\
+	
+	Actualmente, el LHC ha terminado una parada técnica desde 2013 para la actualización del acelerador, y colisiona protones con una energía de 13 TeV. El mayor éxito del LHC ha sido el descubrimiento del Bosón de Higgs, la partícula que da al resto de partículas elementales su masa, sin olvidar que también ha tenido que ir redescubriendo todas las otras partículas que conforman el modelo estándar\cite{DISCOVER}.\\
+	
+	Cuando los haces de partículas están circulando en los aceleradores, el acceso de personal no está permitido por razones de seguridad radiactiva. Las colisiones entre las partículas presentes en los haces y los componentes que forman el acelerador resultan en que estos componentes se convierten en radiactivos. Esto implica que incluso si los haces no están circulando, el acceso de personal no es posible en ciertas áreas hasta que pase el tiempo y se reduzcan los niveles de radiación. Para ello la utilización de \textbf{robots} en este entorno permite incrementar la seguridad del personal y reducir el tiempo de intervención, incrementando el tiempo operacional en una instalación de tal coste (presupuestado en 7.5 mil millones de euros).\\
+	
+	En el CERN se han desarrollado varios proyectos de robótica: los robots del ISOLDE, Telemax, Theodor, CERNTAURO framework, MOWTRAC, TIM, etc. Entre todos ellos el proyecto que más me ha interesado es TIM\cite{TIM1}\cite{TIM2}, Train Inspection Monorail, un robot monorail que va por el techo, permite realizar tareas de inspección visual remota y medidas de radiación y oxígeno a lo largo de los túneles del LHC. En estos túneles es donde se produjo el accidente de 2008, el cuál pudo haberse evitado\cite{ACCIDENTAVOID}; por ello he considerado su tarea de especial interés de cara a evitar futuras posibles fallas en LHC.\\
+	
+	Una restricción clave en el diseño del tren fue la necesidad de ser capaz de operar sin ninguna mayor modificación a la infraestructura existente. Es decir, el tren puede solo comunicarse con la sala de control en la superficie a través de una red móvil de bajo ancho de banda. Otra restricción es la necesidad para el tren de tener una pequeña sección; esto es necesario para que sea compatible con pequeñas oberturas en las puertas de sector y ventilación a lo largo del túnel. Para evitar problemas con contactos deslizantes y para asegurar que TIM sea capaz de operar incluso si la electricidad se ha perdido en la sección del raíl en el que se encuentra, TIM es alimentado por baterías. Sólo se enchufa al raíl de potencia para cargar baterías cuando está estacionario.\\
+	
+	Se espera que en el futuro, el tren sea utilizado por personal en el Centro de Control del CERN. Por esta razón ha sido diseñado para ser lo más autónomo posible, por lo que no requiere de un operador para monitorizar su operación durante todo el tiempo que está en movimiento. El operador especifica el destino deseado y el tren viaja autónomamente hasta la posición. Dos encoders en las ruedas se encargan de la odometría; códigos de barras instalados cada 100 metros reinician el contador para asegurar que los errores de posicionamiento acumulados no hagan que el tren recorra distancias innecesarias.\\
+	
+	A lo largo de su vida operativa TIM ha tenido fallos\cite{FAILLURES}, entre ellos uno de calibración, en el que TIM consumía el doble de potencia cuando avanzaba en relación con el movimiento de retroceso. Esto se debía un fallo en el motor, que pudo haberse evitado con una correcta calibración antes de usarse. Otros fallos son en los que TIM se queda sin energía o es incapaz de comunicarse con el Centro de Control. Asegurar los requerimientos de energía y comunicación para una misión es vital antes de empezarla. Un sistema de gestión de la energía que permita la predicción autónoma de la energía (estimando el tiempo y la distancia de autonomía) ayuda en asegurar que el robot no se quede sin energía. Otra posibilidad es desarrollar una funcionalidad en TIM que alerte al operador antes de que el robot se quede sin energía o sin conexión de comunicación inalámbrica.\\
+	
+	Hay un proyecto\cite{COLLIMATOR} basado en TIM para medir el alineamiento de los colimadores del LHC, que son los que tienen las tasas más altas de radiación de todos los equipos en el túnel del LHC. El sistema mide el alineamiento preciso de los colimadores con respecto a los imanes de referencia. La técnica emplea una combinación de sondas montadas en dos brazos telescópicos, que automáticamente siguen un cable estirado instalado enfrente de los colimadores, y fotogrametría para medir la posición y alineamiento precisos de los colimadores con respecto al cable estirado.\\
+	
+	\bibliographystyle{acm} % estilo de la bibliografía.
+	\bibliography{yyyy} 
+	
+	\begin{thebibliography}{X}
+		
+		\bibitem{ACCIDENT} \textsc{Paul Rincon} \textit{\href{http://news.bbc.co.uk/2/hi/science/nature/7632408.stm}{Collider halted until next year}}, BBC NEWS, 23 de Septiembre 2008.
+		
+		\bibitem{DISCOVER} \textsc{Francisco R. Villatoro} \textit{\href{http://francis.naukas.com/2015/07/01/el-modelo-estandar-a-13-tev-en-el-lhc-run-2/}{El modelo estándar a 13 TeV en el LHC Run 2}}, La Ciencia de la Mula Francis, 1 de Julio 2015.
+		
+		\bibitem{TIM1} \textsc{K. Kershaw, F. Chapron, A. Coin, F. Delsaux, T. Feniet, J-L. Grenard} y \textsc{R. Valbuena} \textit{\href{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=4440202}{Remote Inspection, Measurement and Handling for LHC}}, Particle Accelerator Conference, 2007. PAC. IEEE, Junio 2007.
+		
+		\bibitem{TIM2} \textsc{Keith Kershaw, Bruno Feral, Jean-Louis Grenard, Thierry Feniet, Sven De Man, Cathelijne Hazelaar-Bal, Caterina Bertone} y \textsc{Ruehl Ingo} \textit{\href{http://cdn.intechopen.com/pdfs-wm/45831.pdf}{Remote Inspection, Measurement and Handling for Maintenance and Operation at CERN}}, International Journal of Advanced Robotic Systems, 12 de Julio 2013.
+		
+		\bibitem{ACCIDENTAVOID} \textsc{Francisco R. Villatoro} \textit{\href{http://francis.naukas.com/2010/02/24/el-fallo-del-lhc-en-septiembre-de-2008-fue-un-error-de-diseno-y-se-podria-haber-evitado-con-un-buen-control-de-calidad/}{El fallo del LHC en septiembre de 2008 fue un error de diseño y se podría haber evitado con un buen control de calidad}}, La Ciencia de la Mula Francis, 24 de Febrero 2010.
+		
+		\bibitem{FAILLURES} \textsc{Ramviyas Parasuraman} \textit{\href{http://arxiv.org/abs/1508.03000}{Few common failure cases in mobile robots}}, CVAP, Royal Institute of Technology (KTH), Stockholm, Sweden, 12 de Agosto 2015.
+		
+		\bibitem{COLLIMATOR} \textsc{A. Behrens, P. Bestmann, C. Charrondiere, T. Feniet, JL. Grenard} y \textsc{D. Mergelkuhl} \textit{\href{http://iwaa2010.desy.de/e107506/e107507/e113279/e119275/IWAA2010_PB_train.pdf}{The LHC Collimator Survey Train}}
+		
+	\end{thebibliography}
+	
+ 	
+\end{document}

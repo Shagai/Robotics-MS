@@ -1,0 +1,99 @@
+classdef probability_Homework
+    
+    properties(GetAccess = private, SetAccess = private)
+       array 
+    end    
+    
+    methods
+        function obj = probability_Homework(array)
+            obj.array = array;
+        end
+            
+        %Calculate the mean of array
+        function mean = mean(obj, varargin)
+            sum = 0;
+            
+            if nargin == 2
+                arr = varargin{1};                
+            else
+                arr = obj.array;
+            end
+
+            %%Sum all elements of array
+            for i = 1:length(arr)
+                sum = sum + arr(i);
+            end
+
+            % Divide between the number of elements of array
+            mean = sum / length(arr);
+        end       
+
+        function var = varianceBias(obj, varargin)
+            sum = 0;
+            
+            if nargin == 2
+                arr = varargin{1};                
+            else
+                arr = obj.array;
+            end
+            
+            for i = 1:length(arr)
+                sum = sum + arr(i)^2;
+            end
+
+            var = sum / length(arr) - obj.mean(arr)^2;
+        end
+        
+        function var = varianceUnBias(obj, varargin)
+            
+            if nargin == 2
+                arr = varargin{1};                
+            else
+                arr = obj.array;
+            end
+            
+            var = (length(arr)/(length(arr) - 1)) * obj.varianceBias(arr);
+        end
+        
+        function std = standardDeviation(obj, varargin)
+            
+            if nargin == 2
+                arr = varargin{1};                
+            else
+                arr = obj.array;
+            end
+            
+            std = sqrt(obj.varianceUnBias(arr));
+            
+        end
+        
+        function cov = covarianceBias(obj, array1, array2)
+            
+            covXX = obj.mean(array1.*array1) - obj.mean(array1)^2;
+            covXY = obj.mean(array1.*array2) - obj.mean(array1)*...
+                        obj.mean(array2);
+            covYY = obj.mean(array2.*array2) - obj.mean(array2)^2;
+            
+            cov = [covXX covXY; covXY covYY];
+        end
+        
+        function cov = covarianceUnBias(obj, array1, array2)
+            
+            covMat = obj.covarianceBias(array1, array2);
+            cov = covMat.*length(array1)/(length(array1)-1); 
+        end
+        
+        function corr = correlation(obj, array1, array2)
+            
+            cov = obj.covarianceUnBias(array1, array2);
+            corr = cov(1,2)/sqrt(cov(1,1)*cov(2,2));
+        end
+    end    
+    
+    methods (Access = {?probability_Homework})
+       
+        function test = test(obj)
+           test = obj.array(1); 
+        end
+    end
+end

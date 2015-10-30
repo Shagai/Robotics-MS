@@ -1,0 +1,513 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Inteligecia Artificial Examen 1 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\begin{quote}
+		El arte de desarrollar máquinas con capacidad para realizar funciones que cuando son realizadas por personas requieren de inteligencia. - Kurzweil 1990
+	\end{quote}
+	
+	El enfoque del \textbf{Test de Turing}:
+	\begin{itemize}
+		\item Procesamiento de lenguaje natural.
+		\item Representación del conocimiento.
+		\item Razonamiento automático.
+		\item Aprendizaje automático.
+	\end{itemize}
+	
+	\textbf{Definición:} Conjunto de técnicas que se aplican en el diseño de programas para computador, que tengan capacidad de razonar, en el sentido de inferir nueva información, y que por la dificultad del problema a resolver requieren una solución con un grado de \textbf{inteligencia}.\\
+	
+	Las \textbf{técnicas básicas} en inteligencia artificial son:
+	\begin{itemize}
+		\item Búsqueda heurística.
+		\item Lógica y Razonamiento.
+		\item Representación del conocimiento.
+		\item Lenguajes y herramientas.
+	\end{itemize}
+	
+	Las principales técnicas son:
+	\begin{itemize}
+		\item Heurística
+		\item Sistemas expertos
+		\item Lógica
+		\item Procesamiento del lenguaje natural
+		\item Lógica borrosa
+		\item Redes Neuronales
+		\item Algoritmos Genéticos
+	\end{itemize}
+	
+	Y las principales aplicaciones son: \textbf{robótica}, \textbf{control de procesos} y \textbf{Gestión y planificación}.\\
+	
+	\section{Búsqueda Heurística}
+	
+	\textbf{Heurística} viene de \textit{Heuriken}, que significa descubrir. Una heurística es una técnica que aumenta la eficiencia del proceso de búsqueda. Un ejemplo de búsqueda heurística es el \textbf{Problema del viajante}.\\
+	
+	\begin{quote}
+		\textit{Todos los procesos de búsqueda pueden tratarse como un recorrido sobre una estructura en forma de árbol en el que cada nodo representa un estado y cada enlace una relación entre los estados.} - Newell y Simon, 1963, Ernst y Newell, 1969.
+	\end{quote}
+	
+	Como métodos de búsqueda están:
+	
+	\begin{description}
+		\item[Ensayo y Error:] Profundidad.
+		\item[Escalada:] Simple: Desarrollar el estado mejor. Máxima pendiente o del gradiente. Enfriamiento simulado.
+		\item[Anchura primero:] 
+		\item[El Primero Mejor:] Ventajas conjuntas de anchura y profundidad. Escoger la línea más prometedora. Algoritmo A*.
+		\item[Reducción de Problemas:] Grafos Y-O. Ajuste del primero mejor a esta situación.
+		\item[Verificación de Restricciones:] Expresar las restricciones. Elegir un posible valor para un elemento. Verificar restricciones:
+		\begin{itemize}
+			\item Si es solución fin.
+			\item Si es contradicción repetir.
+			\item Si es posible seguir en profundidad.
+		\end{itemize}
+		\item[Análisis de Medios y Fines:] Comparar el Estado Actual con el Final. Cada operador tiene unas Pre-condiciones y unos resultados. Seleccionar el operador que reduce la diferencia más importante y aplicarlo.
+	\end{description}
+	
+	La \textbf{Función heurística}, $f' = g + h'$, sirve para determinar si un estado es mejor que otro. $g$ Medida de coste para llegar a este nodo (camino). $h'$ Estimación del coste adicional necesario para alcanzar un nodo objetivo a partir del actual.\\
+	
+	La \textbf{Planificación} consiste en:
+	\begin{itemize}
+		\item Escoger la mejor regla.
+		\item Aplicar la regla.
+		\item Detectar la solución.
+		\item Detectar bloqueos.
+		\item Evolucionar hacia la solución.
+	\end{itemize}
+	
+	Y existen distintas formas de planificar:
+	\begin{itemize}
+		\item Mediante pila de objetivos. STRIPS.
+		\item No lineal mediante fijación de restricciones. Nilsson, 1980.
+		\item Jerárquica.
+		\item Sistemas reactivos.
+		\item Basada en casos.
+	\end{itemize}
+	
+	En resumen la representación del conocimiento se consigue mediante un \textbf{Árbol} y el algoritmo de control es la \textbf{Exploración del árbol}.
+	
+	\section{Representación del Conocimiento}
+	
+	Representar el conocimiento es organizar la información para que los programas de IA puedan acceder de forma eficiente. Los tipos de conocimiento son: \textbf{Relacional simple}, \textbf{Heredable}, \textbf{Deductivo} y \textbf{Procedimental}.\\
+	
+	Los lenguajes de programación se pueden dividir en:
+	\begin{description}
+		\item[Convencionales:] Fortran, Cobol.
+		\item[Estructurados:] Pascal, C.
+		\item[Simbólicos:] LISP
+		\item[Predicados Lógicos:] PROLOG
+		\item[Orientados a Objetos:] SmallTalk, C++, Java.
+	\end{description}
+	
+	\subsection{Formas de representar el conocimiento}
+	\subsubsection{Atributo-Valor}
+	
+	Es la forma más simple. Disponible en todos los lenguajes. Poco potente.
+	
+	\begin{lstlisting}
+		Area = 22.28
+		Edad = 33
+	\end{lstlisting}
+	
+	\subsubsection{Objeto-Atributo-Valor}
+	
+	Es sencilla. Disponible en bastantes lenguajes. Poco potente.
+	
+	\begin{lstlisting}
+	El-señor-de-los-anillos
+	{precio=5467, editorial='...', autor='J.R.R. Tolkien'}
+	\end{lstlisting}
+	
+	\subsubsection{Bases de datos relacionales}
+	
+	Son sencillas de construir, permiten múltiples usuarios, selección de candidatos y acceso mediantes lenguajes estándar (SQL). Son sofisticadas y orientadas a objetos. 
+	
+	\subsubsection{Lógica de Predicados}
+	
+	Emplean \textbf{fórmula lógica}, \textit{padre(José, Jesús)}. La base de conocimiento es una colección de fórmulas. Las modificaciones son la adición o borrado de fórmulas. Un lenguaje que lo emplea es el PROLOG.
+	
+	\subsubsection{Redes Semánticas}
+	
+	Una \textbf{red semántica} o esquema de representación en Red es una forma de representación de conocimiento lingüístico en la que los conceptos y sus interrelaciones se representan mediante un grafo. En un grafo o red semántica los elementos semánticos se representan por \textbf{nodos}. Dos elementos semánticos entre los que se admite se da la relación semántica que representa la red, estarán unidos mediante una \textbf{línea, flecha o enlace o arista}. Cierto tipo de relaciones no simétricas requieren grafos dirigidos que usan flechas en lugar de líneas.
+	
+	\subsubsection{Lista de Propiedades}
+	
+	Cada objeto tiene asociada una lista de propiedades. LISP
+	
+	\begin{lstlisting}
+	(Rodrigo (ES_UN Caballero)(ESTA Casado)(TIENE Caballo) (ESTA Desterrado))(Caballero (ES_UN Hombre))
+	\end{lstlisting}
+	
+	\subsubsection{Marcos de Referencia}
+	
+	Lo emplea el lenguaje LISP.
+	
+	\begin{itemize}
+		\item Libro
+		\begin{itemize}
+			\item Autor
+			\item Precio
+			\item Editorial
+		\end{itemize}
+	\end{itemize}
+	
+	\subsubsection{Objetos}
+	
+	Utilizan clase y herencia, e instancias. Lenguajes C++, Java, ...
+	
+	\begin{description}
+		\item[Ventajas:] Éstas son:
+		\begin{itemize}
+			\item Conceptualmente potente
+			\item General y particular
+			\item Razonamiento por defecto
+			\item Razonamiento genérico
+			\item Creación y borrado automático de objetos
+			\item Soportado por un buen compilador
+		\end{itemize}
+		
+	\end{description}
+	
+	\subsection{Uso del Conocimiento}
+	
+	Un \textbf{agente} es un programa de computador que maneja eventos (Entradas, tiempo). Puede ejecutarse en paralelo con otros agentes, el sistema operativo ayuda a ello.
+	
+	\begin{quote}
+		Cualquier cosa capaz de percibir su medioambiente con la ayuda de sensores y actuar en ese medio utilizando actuadores.
+	\end{quote}
+	
+	El término \textit{ontología} en informática hace referencia a la formulación de un exhaustivo y riguroso esquema conceptual dentro de uno o varios dominios dados; con la finalidad de facilitar la comunicación y el intercambio de información entre diferentes sistemas y entidades.\\
+	
+	El alcance de la ontología es todo el conocimiento, pero los más importante: acciones, espacio, tiempo y eventos. Emplea lógica de primer orden, excepciones a valores típicos.\\
+	
+	Las \textbf{ontologías de propósito general} debe ser \textbf{aplicable a cualquier dominio}. No se deben refinar aspectos de representación ni ser ignorados. \textbf{Es un dominio dispar}. Las diferentes áreas deben ser unificadas. El conocimiento puede usarse en cualquier momento.\\
+	
+	Las diferencias entre categorías y objetos son:
+	
+	\begin{itemize}
+		\item  Un objeto es un miembro de una categoría.
+		\item Una categoría es subclase de otra categoría.
+		\item Una categoría como conjunto tiene algunas propiedades.
+		\item Miembros de una categoría se pueden reorganizar por algunas propiedades.
+	\end{itemize}
+	
+	La lógica proposicional necesita múltiples copias para estudiar el efector de las acciones:
+	\begin{description}
+		\item[Situaciones:] Términos lógicos que consisten en una situación inicial y las situaciones generadas al realizar una acción.
+		\item[Flujos:] Funciones y predicados que varían de una situación a la siguiente.
+		\item[Proyección:] Deducir el resultado de una secuencia de acciones.
+		\item[Planificación:] Encontrar una secuencia que logre el efecto deseado.
+	\end{description}
+	
+	\subsection{Lenguajes}
+	
+	\subsubsection{LISP}
+	
+	Es un lenguaje de procesamiento de Listas, creado por McCarthy en 1958. Permite el procesamiento simbólico mediante listas, de manera funcional y recursiva. Tuvo mucha difusión en IA.
+	
+	\begin{lstlisting}
+	(+ 3 (- 7 2) 24 (* 4 2) (+ (12 34) (56 78)))
+	
+	(DEFFUN ERROR( a b)
+	(
+	)
+	\end{lstlisting}
+	
+	\subsubsection{PROLOG}
+	
+	Es un lenguaje de PROgramación LOGica, creado por Colmerauer y Roussel en 1974. Permitía la demostración de teoremas lógicos mediante aserciones, reglas y preguntas.
+	
+	\begin{description}
+		\item[Asserciones] Ejemplo:
+		\begin{lstlisting}
+	madre(María, Jesús)
+	madre(Ana,María)
+	madre(Rosa,Juan)
+		\end{lstlisting}
+		
+		\item[Regla] Ejemplo:
+		\begin{lstlisting}
+	abuela(x,z): madre(x,y), madre(y,z)
+		\end{lstlisting}
+		
+		\item[Preguntas] Ejemplo:
+		\begin{lstlisting}
+	?abuela(Ana,Juan) ?abuela(Ana, Jesús)
+	?abuela(x,Jesús) ?abuela(x,y)
+		\end{lstlisting}
+	\end{description}
+	
+	PROLOG es un lenguaje sencillo y potente. Pero es difícil de construir interfases con el usuario, además no tiene estructuras de control y es difícil mantener. Tiene bastantes desarrollos y extensiones (BEAM-PROLOG, IF-PROLOG).
+	
+	\subsubsection{SmallTalk}
+	
+	Es un lenguaje de programación orientado a objetos, creado por Goldberg y Robson en 1980. Tiene editores, librerías de clases y control de ejecución. Además es potente y elegante, pero tuvo poca difusión.
+	
+	\subsubsection{OPS 5}
+	
+	Es un lenguaje para sistemas basados en reglas con razonamiento hacia delante con profundidad primero. Orientado a modo consulta, emplea \textit{Objeto - Atributo - Valor}. Fue bastante utilizado pero era poco versátil.
+	
+	\subsubsection{Programación Orientada a Objetos}
+	
+	Como C++, es potente y tiene librerías para casi todo.
+	
+	\subsubsection{Sistemas Expertos con un Lenguaje}
+	
+	\begin{itemize}
+		\item Diseñar estructura de datos y reglas.
+		\item Diseñar motor de inferencia.
+		\item Diseñar el control de ejecución.
+		\item Diseñar la interfase de usuario.
+		\item Diseñar la interfase con el Ingeniero de Conocimiento.
+	\end{itemize}
+	
+	\subsubsection{Otros lenguajes}
+	
+	Tienen pocos desarrollos, muy particulares para un problema y difíciles de mantener.
+	
+	\section{Sistemas Expertos}
+	
+	\begin{quote}
+		\textit{Programa inteligente de computador, que usa procedimientos de conocimiento e inferencia para solucionar problemas que son suficientemente difíciles como para requerir expereiencia humana en su solución. El conocimiento necesario para operar en tal nivel, añadido a los procedimientos de inferencia utilizados, puede ser considerado com oun modelo de experiencia de los mejores operadores en dicho campo.} - Feigenbaum
+	\end{quote}
+	
+	Las características de los sistemas expertos son:
+	
+	\begin{itemize}
+		\item Programa de computador.
+		\item Gran cantidad de conocimiento fruto de la experiencia.
+		\item Razonamiento similar al humano.
+		\item Puede operar con datos cualitativos además de cuantitativos.
+		\item Independencia entre el conocimiento y el razonamiento.
+	\end{itemize}
+	
+	Los objetivos de los sistemas expertos son:
+	
+	\begin{itemize}
+		\item Solución de un problema reproduciendo la solución y el procedimiento de un experto.
+		\item Utilizar un lenguaje similar al del usuario.
+		\item Fácil de modificar porque hay incertidumbre en la solución.
+		\item Justificar el razonamiento.
+		\item Integrado con otros programas.
+	\end{itemize}
+	
+	Ejemplos de sistemas expertos son: \textit{Concesión de un crédito}, \textit{Análisis de riesgo}, \textit{Diagnóstico de averías} y \textit{Ayuda a la toma de decisiones en control}.\\
+	
+	La forma típica de operación es mediante la presentación de datos particulares, luego hace un razonamiento mediante preguntas y finalmente presenta las conclusiones.\\
+	
+	\subsection{Estructura}
+	
+	La estructura de un sistema experto está formado de:
+	
+	\begin{description}
+		\item[Base de Conocimiento:] General del problema con datos y hechos. Y particular de la consulta.
+		\item[Motor de Inferencia:] Combina hechos y datos para generar nueva información (Datos). Razona de diferentes formas.
+		\item[Interfase de Usuario:] Debe ser amigable, sofisticada y precisa.
+		\item[Control de Ejecución:] Encargado de indicar la secuencia de operaciones y gestionar los eventos.
+	\end{description}
+	
+	\subsubsection{Conocimiento de Sistemas Expertos}
+	
+	Los \textbf{sistemas basados en el conocimiento} son programas de IA que realiza razonamiento deductivo y utiliza información abstracta. Los sistemas expertos se basan en la experiencia.\\
+	
+	La \textbf{representación del conocimiento} es un problema común en IA. Actualmente se lleva a cabo con lenguajes orientados a objetos. Hechos + Reglas = Base de conocimiento.\\
+	
+	\subsubsection{Razonamiento}
+	
+	Los sistemas expertos se basan en \textbf{reglas}, próximas al usuario, fáciles de comprender, flexibles y fáciles de construir. En una regla, la parte de la izquierda o condiciones, en forma de expresión lógica; la parte derecha o conclusiones, en forma de sentencias: asignación, invocación de funciones, otras.\\
+	
+	El \textbf{razonamiento} es la capacidad de los sistemas expertos para deducir nueva información a partir de hechos conocidos y reglas fruto de la experiencias. Se consigue mediante la \textbf{inferencia}. Hay dos principales tipos de razonamiento: \textit{Modus Ponens} y \textit{Modus Tollens}.\\
+	
+	El \textbf{razonamiento hacia adelante} permite conseguir la máxima información. Esto se consigue de la siguiente forma:
+	\begin{enumerate}
+		\item Formar un conjunto con las reglas.
+		\item Seleccionar un regla del conjunto.
+		\item Comprobar condiciones
+		\begin{itemize}
+			\item Si se cumplen: incorporar conclusiones y quitar la regla del conjunto.
+			\item Si no se cumple: quitar la regla del conjunto.
+			\item Si no se sabe: a) posponer, b) buscar solución en otras reglas.
+		\end{itemize}
+		\item Si quedan reglas volver a 2.
+	\end{enumerate}
+	
+	El \textbf{razonamiento hacia atrás} permite encontrar un valor para una variable. Esto se consigue de la siguiente forma:
+	\begin{enumerate}
+		\item Se toman las reglas que asignan valor a la variable buscada, formando un conjunto.
+		\item Se selecciona una regla según un criterio.
+		\item Comprobar condiciones
+		\begin{itemize}
+			\item Si se cumple se termina la búsqueda
+			\item Si no se cumple se elimina la regla
+			\item Si no se sabe: a) posponer, b) buscar solución en otras reglas.
+		\end{itemize}
+		\item Si quedan reglas volver a 2.
+	\end{enumerate}
+	
+	Los \textbf{criterios de selección de reglas} se pueden basar en la prioridad (+), coste (-), número de condiciones (-), número de conclusiones (+), aleatorio, orden de aparición. El \textbf{tratamiento de las condiciones} se realiza con velocidad, máxima información y soluciones intermedias.\\
+	
+	Un ejemplo de sistema experto es \textit{GURU}.
+	
+	El \textbf{razonamiento de incertidumbre} permite determinar si los hechos son verdad según un factor de confianza, grado de incertidumbre o probabilidad.\\
+	
+	Otros tipos de razonamientos son:
+	
+	\begin{itemize}
+		\item Genérico
+		\item Monotónico - No monotónico.
+		\item Interrumpible
+		\item Basado en hipótesis
+		\item Basado en restricciones
+		\item En tiempo real
+	\end{itemize}
+	
+	\subsubsection{Control de ejecución}
+	
+	El control de ejecución se realiza mediantes consultas, bucles, agenda con prioridades, eventos y orientado a los datos.\\
+	
+	Hay sistemas expertos \textbf{aislados}, \textbf{integrados} con otras aplicaciones y \textbf{embebidos} en una aplicaciones.\\
+	
+	\section{Redes Neuronales}
+	
+	Una forma de emular características propias de los humanos: memorizar y asociar hechos. Es decir, aprender de la experiencia. El cerebro humano es el ejemplo más perfecto de sistema capaz de adquirir conocimiento. Las redes neuronales modelan artificialmente este sistema.\\
+	
+	Una \textbf{red neuronal} es un nuevo sistema para el tratamiento de la información, cuya unidad básica de procesamiento está inspirada en la célula fundamental del sistema nervioso humano, la \textbf{neurona}. Las neuronas son un componente relativamente simple pero conectadas a miles forman un poderoso sistema.\\
+	
+	Las redes neuronales son unidades de procesamiento que intercambian datos numéricos. Se utilizan para reconocer patrones, incluyendo imágenes, manuscritos, tendencias financieras, etc. Además tienen la capacidad de aprender y mejorar su funcionamiento.\\
+	
+	El cerebro humano contiene más de cien mil millones de neuronas. La clave para el procesamiento de la información son las conexiones entre ellas llamadas sinápsis, de media diez mil por neurona. Las \textbf{dendritas} son la vía de entrada de las señales que se combinan en el cuerpo de la neurona. El \textbf{axón} es el camino de salida de la señal generada por la neurona. En las terminaciones de las \textbf{sinápsis} se encuentran unas vesículas que contienen unas sustancias químicas llamadas neurotransmisores, que propagan señales electroquímicas de una neurona a otra. La neurona es estimulada por sus entradas y cuando alcanza cierto umbral, se dispara o activa pasando una señal hacia el axón.\\
+	
+	La función de activación de una red neuronal artificial puede ser una simple función escalón. Se interconectan neuronas en tres tipos de capas: 
+	
+	\begin{description}
+		\item[De entrada:] reciben estímulos externos.
+		\item[Oculta:] elementos internos de procesamiento (se pueden estructurar en varias capas).
+		\item[De salida:] reciben la información procesada y retornan la respuesta del sistema al exterior.
+	\end{description}
+	
+	\subsection{Aprendizaje}
+
+	El aprendizaje, cualquier cambio en la memoria, se puede agrupar en:
+	
+	\begin{description}
+		\item[Supervisado:] Necesita un profesor externo y/o información global. Debe incluir cuando terminar el aprendizaje, cuando y con qué frecuencia repetir una información deseada, e incluir información para el tratamiento del error.
+		\item[No supervisado:] Intenta obtener propiedades comunes de los conjuntos de datos presentados a la entrada.
+	\end{description}
+	
+	Hay distintas formas para asignar los pesos en el aprendizaje supervisado son:
+	\begin{description}
+		\item[Ensayo y error:] Ajusta los pesos en proporión a lo deseado y las salidas obtenidas. Se repite hasta que el eror sea menor que el deseado. $0<peso<1$.
+		\item[Reforzado:] Similar al anterior, la diferencia es que el peso es único. Si el resultado es bueno, el peso es reforzado, si el resultado es malo, el peso será castigado.
+		\item[Estocástico:] Utiliza procesos aleatorios y probabilísticos. Emplea una función de energía para ajustar los pesos.
+		\item[Cableado:] Se trata de un modelo de la Red Neuronal que tiene sus conexiones y pesos fijos.
+		\item[Hebbiano:] Trata de determinar la influencia de una neurona sobre otra. Si la activa se incrementa el peso.
+		\item[Competitivo y Copperativo:] Es un proceso de clasificación de patrones para redes neuronales de dos capas.
+	\end{description}
+	
+	\subsection{Red Neuronal tipo Perceptrón}
+	
+	Se suele utilizar un sistema monocapa o multicapa. Cada neurona recibe todas las salidas de las capas anteriores (Inter-field feedforward). La solución depende del número de neuronas/capa, del valor ratio aprendizaje y del volumen de datos necesarios.
+		
+	Para entrenar una red neuronal el dataset es dividido aleatoriamente en tres conjuntos:
+	\begin{itemize}
+		\item 60\% de los datos se utilizan para el entrenamiento.
+		\item 20\% de los datos se utilizan para validación.
+		\item 20\% de los datos se utilizan para test.
+	\end{itemize}
+	
+	El entrenamiento continúa mientras se reduce el error de validación. Esta es una técnica muy utilizada para evitar el sobreentrenamiento. 
+	
+	\subsection{Red Neuronal de Base Radial}
+	
+	Las redes neuronales de base radial son redes multicapa con conexiones hacia delante. Poseen una única capa oculta y las neuronas ocultas poseen carácter local, cada neurona oculta se activa en una región distinta del espacio de entrada. El carácter local se debe al uso de las funciones de base radial como funciones de activación, generalmente la función gaussiana. Las neuronas de salida realizan una combinación lineal de las activaciones de las neuronas ocultas. Se deben a Moody y Darken, 1989, Renals, 1989, Poggio y Girossi, 1990.\\
+	
+	Estas redes son aproximadores universales (Como el MLP), demostrado formalmente por Park y Sandberg en 1991. Las funciones de base radial (RBF) definen hiperesferas o hiperelipses que dividen el espacio de entrada. Cada RBF (cada neurona) construye una aproximación local no lineal en una determinada región del espacio de entrada. Las RBNR construyen aproximaciones que son combinaciones lineales de funciones locales no lineales. Se han aplicado en gran variedad de problemas: análisis de series temporales, procesamiento de imágenes, reconocimiento automático del habla, diagnósticos médicos, etc.
+	
+	Hay tres capas principales en una red neuronal de base radial:
+	\begin{description}
+		\item[Capa de entrada:] Transmiten las señales de entrada a las neuronas ocultas sin realizar procesamiento. Las conexiones de la capa de entrada a la capa oculta no llevan pesos asociados.
+		\item[Capa oculta:] Realizan una transformación local y no lineal de dichas señales.
+		\item[Capa de salida:] Realiza una combinación lineal de las activaciones de la capa oculta.
+	\end{description}
+	
+	\subsection{Mapa Auto-Organizado o redes SOM}
+	
+	 Es un tipo de red neuronal artificial (ANN por sus siglas en inglés), que es entrenada usando aprendizaje no supervisado para producir una representación discreta del espacio de las muestras de entrada, llamado mapa. Los mapas auto-organizados son diferentes de otras redes neurales artificiales, en el sentido que estos usan una función de vecindad para preservar las propiedades topológicas del espacio de entrada.\\
+	 
+	 Son las más utilizadas para orgnizar (clustering) y se basan en el aprendizaje no supervisado, además no se modifican los pesos de las neuronas. El número de muestras es mayor que para un perceptrón multicapa.\\
+	 
+		
+	
+\end{document}

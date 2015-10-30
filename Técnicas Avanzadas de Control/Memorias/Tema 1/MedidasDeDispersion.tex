@@ -1,0 +1,320 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Medidas de Dispersión \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	%----------------------------------------------------------------------------------------
+	%	PROBLEM 1
+	%----------------------------------------------------------------------------------------
+	
+	\section{Calcular Medidas de Dispersión}
+	
+	Calcular las medidas de dispersión: media, varianza, desviación típica, covarianza y correlación de dos vectores dados en \textit{datos\_tema\_1.mat}. Los dos vectores son \textbf{X} e \textbf{Y}, cada uno con 10.000 valores. Debe de crearse funciones propias para el cálculo de dichas medidas de dispersión y no emplear las funciones ya dadas por el paquete de computación matemática.
+	
+	%------------------------------------------------
+	
+	\subsection{Presentación de los datos}
+	
+	La representación de los valores de \textbf{X} e \textbf{Y} se pueden ver en la Figura \ref{Plots}.
+	
+	
+	\begin{figure}[h!]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=1.0\linewidth]{images/PlotX.PNG}
+			\caption{Representación de X}
+			\label{PlotX}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=1.0\linewidth]{images/PlotY.PNG}
+			\caption{Representación de Y}
+			\label{PlotY}
+		\end{subfigure}
+		\caption{Representación de los valores de X e Y}
+		\label{Plots}
+	\end{figure}
+	\FloatBarrier
+	
+	Vemos que se parecen a una distribución gaussiana, Figure \ref{Gaussian}, pero tienen una preferencia por ciertos puntos. Es decir los puntos en \textbf{X} e \textbf{Y} no están uniformemente repartidos.
+	 
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/Gaussian.PNG}
+		\caption{Ejemplo de Gaussiana}
+		\label{Gaussian}
+	\end{figure}
+	
+	
+	%------------------------------------------------
+	
+	\subsection{Cálculos}
+	
+	Para la realización de los cálculos de media, varianza, desviación típica, covarianza y correlación se ha creado una clase\footnote{Adjunto el código de dicha clase al final de este documento.} con métodos estáticos llamada \textit{Probability\_Homework}. 
+	
+	\subsubsection{Media}
+	
+	En probabilidad y estadística, la media, $\mu$, y la esperanza, $E[x]$, son usados como sinónimos para referirse a una medida de la tendencia central en cualquier distribución de probabilidad o de la variable aleatoria que viene caracterizada por esa distribución. En el caso de una distribución de probabilidad discreta de una variable X, la media es igual a la suma de cada posible valor por la probabilidad de ese valor, ecuación (\ref{media}).
+	
+	\begin{myalign}
+		\mu = \sum x P(x)
+		\label{media}
+	\end{myalign}
+	
+	Si se dan un número finito (N) de puntos de una distribución de probabilidad, entonces la esperanza puede ser aproximada como la suma finita sobre esos puntos,  ecuación (\ref{media discreta}).
+	
+	\begin{myalign}
+		\mu = E[x] = \dfrac{1}{N}\sum_{i=1}^{N}x_i = \bar{x}
+		\label{media discreta}
+	\end{myalign}
+	
+	Para el cálculo de la media se emplea la función \textit{mean(array)} de la clase \textit{Probability\_Homework}, la cuál devuelve la media de los valores del array dado.
+	
+	\begin{description}
+		\centering
+		\item[X:] El valor es: 4.5138
+		\item[Y:] El valor es: 3.0344		
+	\end{description}
+	
+	Para comprobar que la función da los valores correctos comprobamos utilizando la función de MATLAB \textit{mean()}.
+	
+	\begin{description}
+		\centering
+		\item[X] El valor es: 4.5138
+		\item[Y] El valor es: 3.0344		
+	\end{description}
+	
+	Devuelve los mismos valores. Vemos que en las Figuras \ref{PlotX} y \ref{PlotY} las medias calculadas corresponden a los valores centrales, tal y como se corresponderían si fueran gaussianas.
+	
+	\subsubsection{Varianza}
+	
+	La varianza es una medida estadística que mide la dispersión de los valores respecto a un valor central (media), es decir, es el cuadrado de las desviaciones:
+	
+	\begin{myalign}
+		s^2_N = \dfrac{1}{N}\sum_{i=1}^{N}(x_i-\bar{x})^2 = \left( \dfrac{1}{N}\sum_{i=1}^{N}x_i^2\right)-\bar{x}^2
+	\end{myalign}
+	
+	\begin{myalign}
+		\begin{split}
+			Var[x] &= E[x^2] - E[x]^2\\
+				   &= E[x^2] - \mu^2
+		\end{split}
+	\end{myalign}
+	
+	Para el cálculo de la media se emplea la función \textit{varianceBias(array)} de la clase \textit{Probability\_Homework}, la cuál devuelve la media de los valores del array dado.
+	
+	\begin{description}
+		\centering
+		\item[X] El valor es: 1.4416
+		\item[Y] El valor es: 4.2036		
+	\end{description}
+	
+	Comprobamos con la función de MATLAB \textit{var()} y obtenemos:
+	
+	\begin{description}
+		\centering
+		\item[X] El valor es: 1.4418
+		\item[Y] El valor es: 4.2040		
+	\end{description}
+	
+	Son valores muy parecidos pero no iguales, esto se debe a que la función \textit{varianceBias(array)} de la clase \textit{Probability\_Homework} traslada directamente la varianza de la muestra al de la población y la función de MATLAB \textit{var()} es un estimador insesgado de la varianza de la población. Para transformar un estimador sesgado de la varianza en otro no sesgado hay que realizar la siguiente operación:
+	
+	\begin{myalign}
+		\tilde{s}^2_N[x] = \dfrac{N}{N-1}s^2_N
+	\end{myalign}
+	
+	A grandes valores de N la diferencia entre estimador sesgado y no sesgado es irrelevante.
+	
+	Para obtener un estimador no sesgado de la varianza se emplea la función \textit{varianceUnBias(array)} de la clase \textit{Probability\_Homework} y se obtienen los mismos valores de \textit{var()}.
+	
+	\subsubsection{Desviación Típica}
+	
+	La desviación típica es una medida del grado de dispersión de los datos con respecto al valor promedio. Dicho de otra manera, la desviación estándar es simplemente el "promedio" o variación esperada con respecto a la media aritmética. Se define como la raíz cuadrada de la varianza de la variable.
+	
+	\begin{myalign}
+		\begin{split}
+		s_N & = \sqrt{\dfrac{1}{N}\sum_{i=1}^{N}(x_i-\bar{x})^2}\\
+			& = \sqrt{\left( \dfrac{1}{N}\sum_{i=1}^{N}x_i^2\right)-\bar{x}^2} = \sqrt{s^2_N}
+		\end{split}
+	\end{myalign}
+	
+	Por tanto habrá un estimador sesgado y otro no sesgado. Para obtener los valores de la desviación típica no sesgada se emplea la función \textit{standardDeviation(array)} de la clase \textit{Probability\_Homework}.
+	
+	\begin{description}
+		\centering
+		\item[X] El valor es: 1.2007
+		\item[Y] El valor es: 2.0504
+	\end{description}
+	
+	Empleando la función de MATLAB \textit{std()} se obtienen los mismos valores. Vemos que en las Figuras \ref{PlotX} y \ref{PlotY} las desviaciones típicas calculadas corresponden a las zonas donde se encuentran la mayor parte (68\%) de los valores, tal y como se corresponderían si fueran gaussianas, Figura \ref{GaussianWiki}. Por tanto, los valores de \textbf{X} e \textbf{Y} se ajustan a gaussianas.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/GaussWiki.PNG}
+		\caption{Valores de una gaussiana. Fuente: Wikipedia}
+		\label{GaussianWiki}
+	\end{figure}
+	
+	\subsubsection{Covarianza}
+	
+	La covarianza es un valor que indica el grado de variación conjunta de dos variables aleatorias. Es el dato básico para determinar si existe una dependencia entre ambas variables y además es el dato necesario para estimar otros parámetros básicos, como el coeficiente de correlación lineal o la recta de regresión.
+	
+	La covarianza entre dos distribución conjunta variables aleatorias reales x e y de segundos momentos finitos se define como2
+	
+	\begin{myalign}
+		\sigma(x,y) = E\left[ (x- E[x])(y-E[y]) \right]
+	\end{myalign}
+	
+	Apelando a la propiedad de la esperanza matemática lineal, se puede simplificar como:
+	
+	\begin{myalign}
+		\begin{split}			
+			\sigma(x,y) &= E\left[ (x- E[x])(y-E[y]) \right]\\
+						&= E\left[ xy - xE[y] - E[x]y + E[x]E[y] \right]\\
+						&= E[xy] - E[x]E[y] - E[x]E[y] + E[x]E[y]\\
+						&= E[xy] - E[x]E[y]
+		\end{split}
+	\end{myalign}
+	
+	Este estadístico refleja la relación lineal que existe entre dos variables. El resultado numérico fluctúa entre los rangos de +infinito a -infinito. Al no tener unos límites establecidos no puede determinarse el grado de relación lineal que existe entre las dos variables, solo es posible ver la tendencia.
+	
+	\begin{equation*}
+		\sigma_{xy} =
+		\left\lbrace
+		\begin{array}{l}
+			> 0, \; \text{Correlación directa. Recta de regresión creciente.}\\
+			= 0, \; \text{No hay correlación.}\\
+			< 0, \; \text{Correlación Inversa. Recta de regresión decreciente.}
+		\end{array}
+		\right.
+	\end{equation*}
+		
+	Para el cálculo de la matriz de covarianza no sesgada se emplea la función \textit{covarianceUnBias(X,Y)} de la clase \textit{Probability\_Homework}, que devuelve la misma matriz que la función de MATLAB \textit{cov(X,Y)}.\\
+	\begin{center}
+		$Cov(X,Y) = \begin{pmatrix}
+		1.4418 & 2.1623 \\
+		2.1623 & 4.2040
+		\end{pmatrix}$
+	\end{center}
+	
+	Para ver si la matriz de covarianza se ajusta a la realidad de los valores de \textbf{X} e \textbf{Y}, mostramos los valores de \textbf{X} frente a \textbf{Y}, Figura \ref{X-Y}.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/X-Y.PNG}
+		\caption{Valores de Y frente a X}
+		\label{X-Y}
+	\end{figure}
+	
+	Vemos que presenta una recta de regresión creciente, por tanto tiene una correlación directa, todos los valores de la matriz de covarianza son positivos.\\
+	
+	\subsubsection{Correlación}
+	
+	La correlación indica la fuerza y la dirección de una relación lineal y proporcionalidad entre dos variables estadísticas. Se considera que dos variables cuantitativas están correlacionadas cuando los valores de una de ellas varían sistemáticamente con respecto a los valores homónimos de la otra: si tenemos dos variables (X e Y) existe correlación si al aumentar los valores de X lo hacen también los de Y y viceversa.\\
+	
+	El valor de la correlación se obtiene a partir de los valores de la matriz de covarianza:
+	
+	\begin{myalign}
+		Corr = \dfrac{Cov_{1,2}}{Cov_{1,1}Cov_{2,2}}
+	\end{myalign}
+	
+	Como hemos visto en la Figura \ref{X-Y}, las variables \textbf{X} e \textbf{Y} presentan una fuerte correlación. Para calcular el coeficiente de correlación se usa la función \textit{correlation(X,Y)} de la clase \textit{Probability\_Homework} y devuelve la misma matriz que la función de MATLAB \textit{corrcoef(X,Y)}, siendo el coeficiente de correlación, $Corr_{1,2}$.
+	
+	\begin{center}
+		$Corr(X,Y) = \begin{pmatrix}
+		1.0000 & 0.8783 \\
+		0.8783 & 1.0000
+		\end{pmatrix}$
+	\end{center}
+	
+	Comparamos la Figura \ref{X-Y} con ejemplos de correlación de la Figura \ref{Corr}. Y se observa que el coeficiente de correlación, $corr_{1,2}$, se acerca al del segundo ejemplo y la Figura \ref{X-Y} también se asemeja.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.8\linewidth]{images/Corr.PNG}
+		\caption{Ejemplos de Correlación. Fuente: Wikipedia}
+		\label{Corr}
+	\end{figure}
+	
+	
+	\subsection{Clase \textit{Probability\_Homework}}
+	
+	Adjunto el script con la clase que contiene las funciones anteriormente empleadas:
+	
+	\lstinputlisting{scripts/Probability_Homework.m}
+	
+\end{document}
