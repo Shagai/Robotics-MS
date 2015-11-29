@@ -487,6 +487,7 @@ for i = 1:str2num(gdl)
     plot3([0 Jacob(1,i)], [0 Jacob(2,i)], [0 Jacob(3,i)], '-')
     legend(nameJv(1:i));
 end
+view(45,45)
 xlabel('X') % x-axis label
 ylabel('Y') % y-axis label
 zlabel('Z') % z-axis label
@@ -501,6 +502,7 @@ for i = 1:str2num(gdl)
     plot3([0 Jacob(4,i)], [0 Jacob(5,i)], [0 Jacob(6,i)], '-')
     legend(nameJw(1:i));
 end
+view(45,45)
 xlabel('X') % x-axis label
 ylabel('Y') % y-axis label
 zlabel('Z') % z-axis label
@@ -742,109 +744,83 @@ robot = handles.robot;
 
 [yoshikawa, X] = Yoshikawa_W(hObject, handles, robot);
 
-
-
-% Show Yoshikawa's values in a 3D plot
-function Yoshikawa(handles, robot)
-qx = get(handles.planeYoshi,'Value');                      % Articular Variable X
-qy = get(handles.NumberPoints,'Value');                      % Articular Variable Y
-q = get(handles.qYoshi, 'Value');                       % Articular Variable to move
-qvalue = get(handles.sliderYoshi,'Value')*(pi/180);
-h = 0;
-qs = zeros(1, str2num(get(handles.EnterGDL,'String')));
-% Calculate all posible points moving the two selected articular variables
-for i = -pi : 0.1 : pi
-    for j = -pi : 0.1 : pi
-        qs(qx) = i;
-        qs(qy) = j;
-        qs(q) = qvalue;
-        h = h + 1;       
-        MatrixHom = robot.fkine(qs);
-        posrot(1:3) = transl(MatrixHom)';
-        X(h) = posrot(1);
-        Y(h) = posrot(2);
-        Z(h) = posrot(3);
-        yoshikawa(h) = robot.maniplty(qs, 'yoshikawa');
-    end
-end
-% Plot in a 3D scatter the calculated points
-axes(handles.YoshiPlot);
-scatter3(X,Y,Z, 40, abs(yoshikawa), 'filled')
-ax = gca;
-ax.XDir = 'reverse';
-view(-31,14);
-xlabel('x')
-ylabel('y')
-zlabel('z')
-
-cb = colorbar;                                     % create and label the colorbar
-cb.Label.String = 'Yoshikawa Index';
-
+% Calculate Yoshikawa indices around all work space
 function [yoshikawa, X] = Yoshikawa_W(hObject, handles, robot)
-gdl = str2num(get(handles.EnterGDL,'String'));
-set = sobolset(gdl);                                  % Construct Sobol quasi-random point set           
-N = str2double(get(handles.NumPoints,'String'));
-qs = net(set,N);                                    % Retrieve N first numbers
-qs = qs.*(2*pi);
-X = zeros(N, 3);
-yoshikawa = zeros(1,N);
+gdl = str2double(get(handles.EnterGDL,'String'));       % GDL
+set = sobolset(gdl);                                    % Construct Sobol quasi-random point set           
+N = str2double(get(handles.NumPoints,'String'));        % Number of Points in the 3D Space
+qs = net(set,N);                                        % Retrieve N first numbers
+qs = qs.*(2*pi);                                        % Adjust to our values [0-1]*(2*pi)
+X = zeros(N, 3);                                        % Initialize vector of points [X Y Z]
+yoshikawa = zeros(1,N);                                 % Initialize vector of Yoshikawa indices
+% Parallel For Loop along all Points
 parfor i = 1:N
-    MatrixHom = robot.fkine(qs(i,:));
-    X(i,:) = transl(MatrixHom)';
-    yoshikawa(1,i) = robot.maniplty(qs(i,:), 'yoshikawa');
+    MatrixHom = robot.fkine(qs(i,:));                           % Calculate Homogeneus Matrix
+    X(i,:) = transl(MatrixHom)';                                % Calculate Point of space from Homogeneus Matrix
+    yoshikawa(1,i) = robot.maniplty(qs(i,:), 'yoshikawa');      % Calculate Yoshikawa index
 end
 
-handles.Dimensions = [min(X(:,1)), max(X(:,1)), min(X(:,2)), max(X(:,2)) ,min(X(:,3)), max(X(:,3))];
-handles.yoshikawa = yoshikawa;
-handles.X = X;
+handles.Dimensions = [min(X(:,1)), max(X(:,1)), min(X(:,2)), max(X(:,2)) ,min(X(:,3)), max(X(:,3))];    % Save Dimensions of space
+handles.yoshikawa = yoshikawa;                                  % Save Yoshikawa Indice
+handles.X = X;                                                  % Save Points
 % Update handles structure
 guidata(hObject, handles);
-
+% Show Yoshikawa Indices in a 3D scatter
 ShowYoshikawa(handles);
 
 % Plot in a 3D scatter the calculated points
 function ShowYoshikawa(handles)
 plane = get(handles.planeYoshi,'Value');                      % Plane
-N = str2double(get(handles.NumPoints,'String'));
-value = get(handles.sliderYoshi, 'Value');
-thickness = str2double(get(handles.thickness, 'String'));
-index = 1;
+N = str2double(get(handles.NumPoints,'String'));              % Number of Points in 3D Space
+value = get(handles.sliderYoshi, 'Value');                    % Value of Slider
+thickness = str2double(get(handles.thickness, 'String'));     % Thicknes of the plane
+index = 1;                                                    % Axis by defaul
+% If XY Plane
 if (plane == 1)
-    index = 3;
+    index = 3;      % Z Axis
 end
+% If XZ Plane
 if (plane == 2)
-    index = 2;
+    index = 2;      % Y Axis
 end
+% If YZ Plane
 if (plane == 3)
-    index = 1;
+    index = 1;      % X Axis
 end
-X = handles.X;
-yoshikawa = handles.yoshikawa;
-dimensions = handles.Dimensions;
-set(handles.sliderYoshi, 'Min', dimensions(2*index-1))
-set(handles.sliderYoshi, 'Max', dimensions(2*index))
+X = handles.X;                                              % Points of Space
+yoshikawa = handles.yoshikawa;                              % Yoshikawa Indices
+dimensions = handles.Dimensions;                            % Dimensions
+set(handles.sliderYoshi, 'Min', dimensions(2*index-1))      % Set Max value to slider
+set(handles.sliderYoshi, 'Max', dimensions(2*index))        % Set Min value to slider
 h = 0;
 O = 0;
+% For loop along N points
 for i = 1:N
+    % If vector of points is inside of the plane save the vector
     if ((value - thickness) < X(i,index) && X(i,index) < (value + thickness))
         h = h + 1;
-        O(h,1) =  X(i,1);
-        O(h,2) =  X(i,2);
-        O(h,3) =  X(i,3);
-        yos(h) = abs(yoshikawa(i));
+        Points(h,1) =  X(i,1);          % X Coord
+        Points(h,2) =  X(i,2);          % Y Coord 
+        Points(h,3) =  X(i,3);          % Z Coord
+        yos(h) = abs(yoshikawa(i));     % Save Yoshikawa index
     end
 end
+
+%Plot the 3D scatter
 axes(handles.YoshiPlot);
-scatter3(O(:,1),O(:,2),O(:,3), 40, yos(:), 'filled')
+scatter3(Points(:,1),Points(:,2),Points(:,3), 40, yos(:), 'filled')     % 3D Scatter
 ax = gca;
 ax.XDir = 'reverse';
+% X Y Z Labels
 xlabel('x')
 ylabel('y')
 zlabel('z')
+% Size of the plot box
 xlim([dimensions(1) dimensions(2)]);
 ylim([dimensions(3) dimensions(4)]);
 zlim([dimensions(5) dimensions(6)]);
 
+% Change the camera view in function of the selected plane
 if (plane == 1)
     view(0,90)  % XY
 end
@@ -854,6 +830,7 @@ end
 if (plane == 3)
     view(90,0)  % YZ
 end
+% Color of the colorbar
 cb = colorbar;                                     % create and label the colorbar
 cb.Label.String = 'Yoshikawa Index';
 
@@ -888,6 +865,8 @@ function sliderYoshi_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+% Show Yoshikawa indice every time slider moves
 ShowYoshikawa(handles);
 
 % --- Executes during object creation, after setting all properties.
