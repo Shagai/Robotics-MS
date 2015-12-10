@@ -1,0 +1,114 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % Spanish language/hyphenation
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+
+\usepackage{cite} % para contraer referencias
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	%\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	%\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Robótica Espacial y Visita al Laboratorio \\ % The assignment title
+	%\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	\maketitle
+	
+	Desde el mismo día en que se lanzó el robot \textit{Curiosity} he estado leyendo todo lo posible sobre la labor de este robot, y lo que este año me ha parecido más curioso al leerlo es cómo el robot corrige los errores de odometría\cite{CURIOSITY}.\\
+	
+	El robot \textit{Curiosity} está equipado con un sistema de odometría que computa los seis grados de libertad de la posición del rover (x, y, z, roll, pitch, yaw). Sin embargo, cuando el robot avanza, un sistema de cámaras es usado para corregir los cálculos de odometría. La odometría visual solo corrige la posición del robot al final de cada paso de menos de un metro.\\
+	
+	Debido a que no hay satélites GPS en Marte, \textit{Curiosity} emplea una idea bastante original para el seguimiento visual, el cuál consiste en unas señales en código morse que las ruedas dejan en el suelo marciano y facilitan al sistema de cámaras conocer la distancia recorrida y la orientación. Estas cámaras están basadas en los algoritmos de seguimiento visual de Movarec\cite{MOVAREC}. \\
+	
+	Con esta estrategia \textit{Curiosity} ha sido capaz de conducir sobre terrenos de 31 grados de inclinación, y sobre terrenos que van desde arenosos a terrenos con piedras duras o mezcla de ambos.\\
+	
+	
+	\bigskip
+	
+	Sobre la visita al laboratorio, me ha parecido bastante interesante el control bilateral del par de robots \textit{Kraft}\footnote{Creo que ambos robots son los modelos \textit{Grips} de \textit{Kraft Telerobotics.}} que hay en el laboratorio. Ambos robots funcionan mediante accionamiento hidráulico y son de bajo peso. Y el sistema maestro reacciona se guía bastante bien con el movimiento del brazo.\\
+	
+	El sistema de cámara 3D que emplea y su proyección en una televisión 3D ayuda mucho en la telemanipulación de objetos en la zona de trabajo, al permitir ver los objetos de manera tridimensional. La propuesta en el futuro de colocar la cámara sobre el robot ayudaría mucho más en estas tareas.\\
+	
+	Otras propuestas que nos fueron presentadas para la visualización del entorno teleoperado es un sistema con \textit{Kinect} y con un conjunto de cámaras infrarrojas, pero de momento estaban con el problema de evitar que unas cámaras no se vean entre sí.\\
+	
+	En el futuro la herramienta-pinza situada en el extremo del robot será sustituida por una mano robótica que nos fue enseñada en otro proyecto del laboratorio.
+	
+	\bibliographystyle{acm} % estilo de la bibliografía.
+	%\bibliography{yyyy} 
+	
+	\begin{thebibliography}{X}
+		
+		\bibitem{CURIOSITY} \textsc{Julián Estévez} \textit{\href{http://mappingignorance.org/2015/09/30/robot-navigation-on-mars/}{Robot navigation on Mars}}, Mapping Ignorance, 30 de Septiembre 2015.
+		
+		\bibitem{MOVAREC} \textsc{Moravec, H.} \textit{ Obstacle Avoidance and Navigation in the Real World by a Seeing Robot Rover}, Ph.D. thesis, Stanford University, Stanford, CA., 1980.
+		
+	\end{thebibliography}
+	
+ 	
+\end{document}
