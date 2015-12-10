@@ -1,0 +1,9 @@
+\select@language {spanish}
+\beamer@endinputifotherversion {3.36pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Control Bilateral}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Sistemas Bilaterales}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Arquitectura de Control con Retraso}{9}{0}{1}
+\beamer@sectionintoc {2}{Simulaciones en Matlab}{15}{0}{2}
+\beamer@subsectionintoc {2}{1}{Modelo}{15}{0}{2}
+\beamer@subsectionintoc {2}{2}{Simulaciones y Resultados}{23}{0}{2}

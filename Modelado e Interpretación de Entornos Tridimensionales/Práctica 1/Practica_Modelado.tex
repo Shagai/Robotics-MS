@@ -1,0 +1,1100 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % Spanish language/hyphenation
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Práctica de Modelado e Interpretación de Entornos Tridimensionales \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	\maketitle
+	
+	\section{Explicación de la tarea}
+	
+	El alumno debe de realizar un trabajo sobre alguno (o varios) de los siguientes puntos:
+	\begin{itemize}
+		\item Influencia en la calibración del número de imágenes empleadas.
+		\item Influencia en la calibración del número de puntos empleados.
+		\item Influencia en la calibración del nivel de ruido añadido.
+		\item Influencia en el cálculo de la matriz fundamental del número de imágenes empleadas.
+		\item Influencia en el cálculo de la matriz fundamental del número de puntos empleados.
+		\item Influencia en el cálculo de la matriz fundamental del nivel de ruido añadido.
+	\end{itemize}
+	
+	Para evaluar la bondad de los resultados se recomienda:
+	\begin{itemize}
+		\item En la calibración: errores en la reproyección y errores en la reconstrucción tridimensional.
+		En líneas generales se puede decir que la calibración es correcta si la media de los errores de
+		reproyección es menor de 1.0 píxeles, y si la media de los errores de reconstrucción es
+		menor de 0.3 mm. 
+		
+		\item En el cálculo de la matriz fundamental. En líneas generales se puede decir que la estimación
+		es correcta si la media de los errores de geometría epipolar es menor de 0.004 
+	\end{itemize}
+	
+	\subsection{Desarrollo de la tarea}
+	
+	\subsubsection{Ruido 0 y Puntos Usados 100\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 24.097$ y $E_{max} = 107.44$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 2.453$ y $E_{max} = 4.060$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 1.6914$ y $E_{max} = 6.6826$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	000,000000088&      000,000001191   &   -000,000310236   \\
+	000,000001521&      000,000000081     & -000,015218744   \\
+	-000,000453551 &     000,012482541   &   001,000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0169$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 2.63$ y $E_{max} = 5.102$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.503$ y $E_{max} = 2.86$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2379$ y $E_{max} = 0.9829$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000100216544&	0.000000934240225&	-0.000276407706374 \\
+	0.000001743888247&	-0.000000018101515&	-0.015148390599440 \\
+	-0.000499410792322&	0.012427501856287&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0137$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 10.686$ y $E_{max} = 37.101$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 4.8050$ y $E_{max} = 6.6550$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 2.4995$ y $E_{max} = 10.7615$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000087789471&	0.000001200139563&	-0.000310850488067 \\
+	0.000001489232039&	0.000000049016222&	-0.015342677999877 \\
+	-0.000445268773931&	0.012626417295149&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0046$ y $E_{max} = 0.0213$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.9550$ y $E_{max} = 2.7030$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6450$ y $E_{max} = 1.4190$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1794$ y $E_{max} = 0.7306$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000061371051&	0.000001255981409&	-0.000323147028645 \\
+	0.000001511522663&	0.000000052885787&	-0.015194689034991 \\
+	-0.000442451089967&	0.012462567451273&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0232$.
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7020$ y $E_{max} = 1.4275$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 2.2275$ y $E_{max} = 3.6985$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1809$ y $E_{max} = 0.7318$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000062843093&	0.000001119811100&	-0.000280939168868 \\
+	0.000001593985850&	0.000000044250715&	-0.015234165071434 \\
+	-0.000466424093885&	0.012498294940741&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0155$.
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7080$ y $E_{max} = 1.5730$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.7510$ y $E_{max} = 3.1760$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1863$ y $E_{max} = 0.7939$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000066200299&	0.000001170034617&	-0.000295081976154 \\
+	0.000001542215208&	0.000000050914558&	-0.015294074419089 \\
+	-0.000452615584867&	0.012561559097746&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0045$ y $E_{max} = 0.0174$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7095$ y $E_{max} = 1.7018$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.3253$ y $E_{max} = 2.5728$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1752$ y $E_{max} = 0.7002$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000064283253&	0.000001186317526&	-0.000299979461735 \\
+	0.000001539242984&	0.000000047822181&	-0.015279117622892 \\
+	-0.000450952433138&	0.012546956329632&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0044$ y $E_{max} = 0.0189$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 0.25 y Puntos Usados 100\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 692.3590$ y $E_{max} = 1.3236e+03$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 6.2840$ y $E_{max} = 10.2460$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 144.3235$ y $E_{max} = 1.4118e+03$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000117100411&	0.000001131345453&	-0.000311474725909 \\
+	0.000001570755386&	0.000000061776028&	-0.015083966032154 \\
+	-0.000475633563992&	0.012362135082127&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0169$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.6950$ y $E_{max} = 1.3810$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.0190$ y $E_{max} = 2.1920$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1814$ y $E_{max} = 0.7591$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000156037939&	0.000000737183207&	-0.000271944275461 \\
+	0.000001880151275&	-0.000000019488705&	-0.014930093145264 \\
+	-0.000539453389517&	0.012211518431754&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0140$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 63.0760$ y $E_{max} = 147.7760$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 4.1010$ y $E_{max} = 5.8400$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2386$ y $E_{max} = 1.0385$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000113578372&	0.000001154215798&	-0.000313439391424 \\
+	0.000001516168994&	0.000000045595351&	-0.015280922424553 \\
+	-0.000458868977324&	0.012572433751323&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0046$ y $E_{max} = 0.0213$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.9480$ y $E_{max} = 2.6800$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6620$ y $E_{max} = 1.4720$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1714$ y $E_{max} = 0.6777$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000088318099&	0.000001234622560&	-0.000336274922134 \\
+	0.000001523915589&	0.000000055975462&	-0.015056739555185 \\
+	-0.000453725230911&	0.012334077052558&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0233$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7050$ y $E_{max} = 1.4340$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.9570$ y $E_{max} = 2.2500$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2123$ y $E_{max} = 0.8775$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000074154279&	0.000001053814159&	-0.000268343869003 \\
+	0.000001634939896&	0.000000037960901&	-0.015176285665707 \\
+	-0.000482648365434&	0.012446065169930&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0155$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7103$ y $E_{max} = 1.5730$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.7220$ y $E_{max} = 3.2167$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1773$ y $E_{max} = 0.7187$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000085303056&	0.000001104720434&	-0.000289728344770 \\
+	0.000001596688824&	0.000000041410448&	-0.015184813555536 \\
+	-0.000473319174385&	0.012458742683712&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0045$ y $E_{max} = 0.0175$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7495$ y $E_{max} = 1.8925$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.5320$ y $E_{max} = 2.7728$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1955$ y $E_{max} = 0.8283$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000087961941&	0.000001146576265&	-0.000302760417852 \\
+	0.000001577040166&	0.000000036766354&	-0.015174367934413 \\
+	-0.000468781958101&	0.012451759796459&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0045$ y $E_{max} = 0.0189$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 0.5 y Puntos Usados 100\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7180$ y $E_{max} = 1.3910$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.8010$ y $E_{max} = 3.3910$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2182$ y $E_{max} = 0.8469$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000209866101&	0.000000923002216&	-0.000299344613809 \\
+	0.000001726406393&	0.000000041394304&	-0.014589810905878 \\
+	-0.000561159256193&	0.011911693192366&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0047$ y $E_{max} = 0.0176$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7010$ y $E_{max} = 1.4340$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.7460$ y $E_{max} = 1.7010$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1819$ y $E_{max} = 0.7638$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000263829732&	0.000000235079095&	-0.000229489167640 \\
+	0.000002254182543&	-0.000000045522304&	-0.014399859771080 \\
+	-0.000651028277702&	0.011688000264035&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0045$ y $E_{max} = 0.0157$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7230$ y $E_{max} = 1.8540$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 2.9750$ y $E_{max} = 4.1790$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.4202$ y $E_{max} = 1.5255$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000186870212&	0.000001039924695&	-0.000325742773579 \\
+	0.000001601121496&	0.000000026536361&	-0.015012270579635 \\
+	-0.000503020414056&	0.012330531296000&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0048$ y $E_{max} = 0.0211$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 2.0640$ y $E_{max} = 4.8980$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6640$ y $E_{max} = 1.5040$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1717$ y $E_{max} = 0.6780$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000158802512&	0.000001138609592&	-0.000353432296349 \\
+	0.000001599633275&	0.000000041839533&	-0.014705787359326 \\
+	-0.000498549716545&	0.012012810108360&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0046$ y $E_{max} = 0.0241$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7330$ y $E_{max} = 1.6150$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.7560$ y $E_{max} = 1.9585$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1943$ y $E_{max} = 0.8230$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000119206951&	0.000000852796074&	-0.000240578362668 \\
+	0.000001788026494&	0.000000009316504&	-0.014906586071003 \\
+	-0.000540806203155&	0.012194876410826&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0045$ y $E_{max} = 0.0156$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 5.4980$ y $E_{max} = 23.0103$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.7087$ y $E_{max} = 3.2683$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1856$ y $E_{max} = 0.7892$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000138067418&	0.000000949424455&	-0.000281111455947 \\
+	0.000001727311256&	0.000000015310687&	-0.014895475029528 \\
+	-0.000525419198014&	0.012188694688137&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0046$ y $E_{max} = 0.0177$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7147$ y $E_{max} = 1.7103$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.6202$ y $E_{max} = 3.0133$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1713$ y $E_{max} = 0.6819$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000146559230&	0.000001024957014&	-0.000304576348115 \\
+	0.000001683886539&	0.000000010928766&	-0.014886348757960 \\
+	-0.000517017382222&	0.012186954974592&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0046$ y $E_{max} = 0.0191$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 1 y Puntos Usados 100\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7230$ y $E_{max} = 1.5130$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6690$ y $E_{max} = 1.7700$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1884$ y $E_{max} = 0.7024$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000533916436&	0.000000350370732&	-0.000337314123774 \\
+	0.000002144032492&	-0.000000088315263&	-0.013259722121398 \\
+	-0.000778088363361&	0.010729135051339&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0060$ y $E_{max} = 0.0217$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 3.3360$ y $E_{max} = 8.5730$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6710$ y $E_{max} = 1.5060$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.3303$ y $E_{max} = 1.3164$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000561240628&	-0.000001294759565&	-0.000071761050750 \\
+	0.000003417118365&	-0.000000144009031&	-0.012804637614335 \\
+	-0.000999835349487&	0.010114109077134&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0060$ y $E_{max} = 0.0256$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7350$ y $E_{max} = 1.9050$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6800$ y $E_{max} = 1.5790$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2100$ y $E_{max} = 2.2277$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000448443810&	0.000000647803219&	-0.000374468206555 \\
+	0.000001911924704&	-0.000000050064983&	-0.013965227482305 \\
+	-0.000665686065379&	0.011383272510023&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0060$ y $E_{max} = 0.0238$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7230$ y $E_{max} = 1.9000$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.7210$ y $E_{max} = 1.6940$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1768$ y $E_{max} = 0.6891$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000398760626&	0.000000771661055&	-0.000394750860373 \\
+	0.000001900664997&	-0.000000028526373&	-0.013520192835996 \\
+	-0.000666478627893&	0.010933283522721&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0057$ y $E_{max} = 0.0295$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.0710$ y $E_{max} = 2.8415$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 2.4910$ y $E_{max} = 4.1555$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1687$ y $E_{max} = 0.6561$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000329933650&	0.000000128947457&	-0.000186219403076 \\
+	0.000002401438721&	-0.000000122882585&	-0.013700054433510 \\
+	-0.000767433412988&	0.011061688328923&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0058$ y $E_{max} = 0.0200$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.0813$ y $E_{max} = 2.7373$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.7077$ y $E_{max} = 3.0300$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.9948$ y $E_{max} = 3.3221$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000303306232&	0.000000556346998&	-0.000282613550017 \\
+	0.000002079523099&	-0.000000045378961&	-0.013891562638955 \\
+	-0.000678116296374&	0.011247043356539&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0057$ y $E_{max} = 0.0217$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.2607$ y $E_{max} = 3.4365$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.0050$ y $E_{max} = 1.0050$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1776$ y $E_{max} = 0.7222$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000321154220&	0.000000569167327&	-0.000288159055198 \\
+	0.000002056804382&	-0.000000022269124&	-0.013848056598527 \\
+	-0.000678278524661&	0.011198204531785&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0057$ y $E_{max} = 0.0228$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 0 y Puntos Usados 75\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7460$ y $E_{max} = 1.5830$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6290$ y $E_{max} = 1.6800$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1630$ y $E_{max} = 0.5962$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000100139894&	0.000001231096506&	-0.000330313001941 \\
+	0.000001506778451&	0.000000090203864&	-0.015164781028763 \\
+	-0.000450952163281&	0.012426989104967&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0163$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.2170$ y $E_{max} = 2.8590$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6770$ y $E_{max} = 1.4260$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2045$ y $E_{max} = 0.7923$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000108442423&	0.000001026715559&	-0.000305092871250 \\
+	0.000001671738861&	-0.000000014706234&	-0.015196961303058 \\
+	-0.000480186458499&	0.012481336948998&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0043$ y $E_{max} = 0.0138$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 4.6950$ y $E_{max} = 6.5500$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 11.0050$ y $E_{max} = 13.9910$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.5052$ y $E_{max} = 1.8035$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000089055322&	0.000001163376643&	-0.000303441308762 \\
+	0.000001535495267&	0.000000024400855&	-0.015308962923432 \\
+	-0.000457429836414&	0.012597198055918&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0045$ y $E_{max} = 0.0207$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.6800$ y $E_{max} = 1.7180$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6130$ y $E_{max} = 1.4130$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1628$ y $E_{max} = 0.6095$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000054796494&	0.000001231681516&	-0.000314808004933 \\
+	0.000001536454159&	0.000000046684706&	-0.015207321418559 \\
+	-0.000445657294596&	0.012471619607605&	1.000000000000000 \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0042$ y $E_{max} = 0.0170$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.8115$ y $E_{max} = 1.7010$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.1465$ y $E_{max} = 2.3660$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1685$ y $E_{max} = 0.6792$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000079069001&	0.000001169286103&	-0.000305721111935 \\
+	0.000001559465708&	0.000000054589742&	-0.015213049666455 \\
+	-0.000458297515265&	0.012478289616414&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0154$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.8740$ y $E_{max} = 2.3663$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6500$ y $E_{max} = 1.7230$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1747$ y $E_{max} = 0.6698$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000079020761&	0.000001177229073&	-0.000305854432101 \\
+	0.000001544992419&	0.000000046922109&	-0.015253786017275 \\
+	-0.000455270525591&	0.012524975504886&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0044$ y $E_{max} = 0.0172$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.6957$ y $E_{max} = 1.6605$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.6270$ y $E_{max} = 1.4962$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1631$ y $E_{max} = 0.6243$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000073939914&	0.000001179953828&	-0.000305467200141 \\
+	0.000001551893968&	0.000000042322186&	-0.015243660259327 \\
+	-0.000455469811366&	0.012514140096993&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0171$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 0 y Puntos Usados 50\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 5.1730$ y $E_{max} = 6.3470$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 2.8830$ y $E_{max} = 4.5960$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2260$ y $E_{max} = 0.9485$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000103480437&	0.000001289011717&	-0.000352355828340 \\
+	0.000001463059662&	0.000000114658891&	-0.015197139986200 \\
+	-0.000434118625874&	0.012449387223070&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0043$ y $E_{max} = 0.0157$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 5.2190$ y $E_{max} = 11.1360$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 3.2700$ y $E_{max} = 5.5250$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.4838$ y $E_{max} = 1.7224$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000101531979&	0.000001053330145&	-0.000297428893736 \\
+	0.000001640409520&	-0.000000011452609&	-0.015225298660360 \\
+	-0.000478085612397&	0.012516538574346&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0043$ y $E_{max} = 0.0135$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.5830$ y $E_{max} = 1.7190$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 3.7520$ y $E_{max} = 4.9640$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1877$ y $E_{max} = 0.8394$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000117134869&	0.000001086882943&	-0.000290650604694 \\
+	0.000001579837482&	0.000000002791701&	-0.015264898850891 \\
+	-0.000481127483798&	0.012570785710171&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0046$ y $E_{max} = 0.0205$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.5860$ y $E_{max} = 2.9410$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.7320$ y $E_{max} = 1.2870$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1341$ y $E_{max} = 0.5086$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000069320918&	0.000001133940169&	-0.000291954554812 \\
+	0.000001603003049&	0.000000007642188&	-0.015239688700389 \\
+	-0.000467309879713&	0.012517530134473&	1.000000000000000 \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0041$ y $E_{max} = 0.0138$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.7080$ y $E_{max} = 2.0045$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.7150$ y $E_{max} = 2.7685$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1604$ y $E_{max} = 0.6294$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000095397550&	0.000001230351571&	-0.000333380746614 \\
+	0.000001503396463&	0.000000073117846&	-0.015230313991820 \\
+	-0.000443685342000&	0.012496661334176&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0043$ y $E_{max} = 0.0147$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.0090$ y $E_{max} = 3.1980$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.3777$ y $E_{max} = 2.4777$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.2378$ y $E_{max} = 0.9220$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000095860786&	0.000001178694839&	-0.000313650158006 \\
+	0.000001533132550&	0.000000052664553&	-0.015237428671677 \\
+	-0.000456790926731&	0.012514201920203&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0045$ y $E_{max} = 0.0166$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.6700$ y $E_{max} = 1.6940$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 1.2873$ y $E_{max} = 2.2985$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1460$ y $E_{max} = 0.5575$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000090657517&	0.000001155219611&	-0.000305767702595 \\
+	0.000001562381437&	0.000000035174222&	-0.015230217361058 \\
+	-0.000463107270327&	0.012509197526277&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0044$ y $E_{max} = 0.0158$
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subsubsection{Ruido 0 y Puntos Usados 25\%}
+	
+	\subsubsection*{Imágenes 1 a 10}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 6.6420$ y $E_{max} = 9.2430$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 12.8840$ y $E_{max} = 40.0590$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 4.6274$ y $E_{max} = 16.3469$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000067627702&	0.000001151779685&	-0.000296644327685 \\
+	0.000001600037037&	-0.000000025076406&	-0.015306130645137 \\
+	-0.000464634721953&	0.012593362485154&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0040$ y $E_{max} = 0.0113$
+	
+	\subsubsection*{Imágenes 11 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 4.4980$ y $E_{max} = 7.6080$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.3240$ y $E_{max} = 0.8090$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.4354$ y $E_{max} = 1.2201$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000176606585&	0.000001254554008&	-0.000430007967055 \\
+	0.000001454794984&	0.000000012753937&	-0.015370401380612 \\
+	-0.000410508897332&	0.012667004375848&	1.000000000000000 \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0041$ y $E_{max} = 0.0121$
+	
+	\subsubsection*{Imágenes 21 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 5.4330$ y $E_{max} = 9.4850$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 3.3930$ y $E_{max} = 4.2960$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.4937$ y $E_{max} = 1.9948$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000101602039&	0.000001026308579&	-0.000274983709005 \\
+	0.000001682220824&	-0.000000079034171&	-0.015323841704589 \\
+	-0.000493826166665&	0.012631537219005&	1.000000000000000 \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0042$ y $E_{max} = 0.0124$
+	
+	\subsubsection*{Imágenes 31 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.3660$ y $E_{max} = 0.8370$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.3120$ y $E_{max} = 0.7190$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.0784$ y $E_{max} = 0.2921$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000093938554&	0.000001004677255&	-0.000271478825857 \\
+	0.000001689329775&	-0.000000046011456&	-0.015211557679991 \\
+	-0.000496319588187&	0.012512454664390&	1.000000000000000 \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0040$ y $E_{max} = 0.0108$
+	
+	\subsubsection*{Imágenes 1 a 20}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 9.5710$ y $E_{max} = 15.9780$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.3115$ y $E_{max} = 0.7870$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.6821$ y $E_{max} = 2.0915$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000103383383&	0.000001211502408&	-0.000335212660081 \\
+	0.000001511239918&	0.000000002979995&	-0.015321279673816 \\
+	-0.000445597148994&	0.012617684510306&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0041$ y $E_{max} = 0.0118$
+	
+	\subsubsection*{Imágenes 1 a 30}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 1.4047$ y $E_{max} = 3.8153$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.3367$ y $E_{max} = 0.8280$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1927$ y $E_{max} = 0.7139$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000103605792&	0.000001151403656&	-0.000316645683407 \\
+	0.000001567490698&	-0.000000021816061&	-0.015302715661521 \\
+	-0.000461985689291&	0.012602786523177&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} =  0.0042$ y $E_{max} = 0.0121$
+	
+	\subsubsection*{Imágenes 1 a 40}
+	
+	Para \textbf{cámara 1} se obtienen una media de error de reproyección $\bar{E} = 0.9755$ y $E_{max} = 1.7570$.\\
+	Para \textbf{cámara 2} se obtienen una media de error de reproyección $\bar{E} = 0.3218$ y $E_{max} = 0.7722$.\\
+	
+	La media de error de \textbf{distancia en la reconstrucción} $\bar{E} = 0.1927$ y $E_{max} = 0.7139$.\\
+	La matriz fundamental:
+	\[
+	M=
+	\begin{bmatrix}
+	0.000000102230220&	0.000001088199302&	-0.000299389330230 \\
+	0.000001619657233&	-0.000000033157892&	-0.015267117114108 \\
+	-0.000476423372250&	0.012567756238759&	1.000000000000000  \\
+	
+	\end{bmatrix}
+	\]
+	
+	Los errores medios en la \textbf{geometría epipolar} son $\bar{E} = 0.0042$ y $E_{max} = 0.0119$
+	
+	
+	\subsection{Conclusión}
+	
+	Lo más notable es que el \textbf{error medio en la geometría epipolar} nunca ha bajado en todos los ejercicios de $0.004$, pero hablo de la media de errores medios, por lo que habrá errores medios de ciertas muestras que sí están por debajo de $0.004$. Viendo esto se puede asumir que los cálculos de la matriz fundamental no son correctos al encontrarse la media de los errores medios por encima de $0.004$.\\
+	
+	Otra característica importante es que aumentar el tamaño de la muestra más allá de diez en este caso no reducen los \textbf{errores de reproyección}, aunque a veces lo consiga, otras veces lo aumenta. Tampoco afecta mucho aumentar el ruido o reducir el número de puntos, la inmensa mayoría de los casos de estudios se han mantenido por debajo de $1$ pixel.\\
+	
+	Como se destaca en algunas tomas de medidas a veces se producen errores enormes, por encima de $100$, esto se debe a errores puntuales de medida, por lo que estos resultados habría que descartarlos.\\
+	
+	Para el cálculo de las medias de errores se ha exportado el txt a Matlab y de ahí se han seleccionado los datos de interés, \textit{Data\_Selection}, y se han calculado las medias de la siguiente manera:
+	\begin{lstlisting}
+	a = 0;
+	var = Data_Selection;
+	for i = 1:size(var,1)
+	buff = var{i,1};
+	a = a + str2num(buff);
+	end
+	mean = a / size(var,1)
+	\end{lstlisting}
+	
+\end{document}
