@@ -1,0 +1,146 @@
+\documentclass[a4paper, fontsize=11pt]{scrartcl} % A4 paper and 11pt font 
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % Spanish language/hyphenation
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphicx} % The graphicx package
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+
+\usepackage{cite} % para contraer referencias
+
+\usepackage{listings} % Insert Scripts
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	numbers=left,%
+	numberstyle={\tiny \color{black}},% size of the numbers
+	numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)presentar
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newenvironment{myalign}{\par\nobreak\large\noindent\align}{\endalign} %Altering fontsize in equations globally
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	%\textsc{Master en Automática y Robótica - UPM} \\ [25pt] % Your university, school and/or department name(s)
+	%\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Robot Motion Planning: A Distributed Representation Approach \\ % The assignment title
+	%\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Jorge Camarero Vera - 07052\\ Rodrigo Orellana Ferrufino - M15139 \\ Kunshen Zhang - M15148} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	\maketitle
+	
+	\section{Introducción}
+	
+	En este artículo se propone una propuesta de planificación de trayectorias de robot que consiste en la construcción y búsqueda en un grafo conectando los mínimos locales de una función de potencial definida sobre el \textit{Espacio de Configuraciones} del robot.\\
+	
+	Este planificador es más rápido que los propuestos previamente, soluciona problemas para robots con muchos grados de libertad (hasta 31 GDL) y permite problemas con múltiples robots. Además es altamente paralelizable y acepta metas definidas para las posiciones deseadas de uno o varios puntos del robot.\\
+	
+	\section{Trabajo Previo}
+	
+	Antes de la publicación de este artículo ya habían sido implementados algoritmos prácticos en casos específicos, (Brooks and Lozano Pérez 1983; Gouzènes 1984; Laugier and Germain 1985; Faverjon 1986; Lozano-Pérez 1987; Faverjon and Tounassoud 1987; Barraquand et al 1989; Zhu and Latombre 1989).\\
+	
+	Es necesaria la discretización (Descomposición en celdas) del espacio, se dividen las técnicas en dos grupos:
+	
+	\begin{itemize}
+		\item Métodos Globales como el \textit{Octree} empleado por Faverjon (1984).
+		\item Métodos Locales basados en usar una malla en el \textit{Espacio de Configuraciones} y buscar en esta malla. (Donald 1984; Faverjon and Tournassoud 1987). Necesitan buena heurística para guiar la búsqueda.
+	\end{itemize}
+	
+	El problema de las heurísticas necesarias es que se quedan atrapadas en mínimos locales. Como (Khatib 1989), que plantea guiar al robot por un gradiente negativo de un campo de potencial artificial.\\
+	
+	Este problema ha intentado solucionarse definiendo una \textit{función de navegación} analítica. Soluciones han sido propuestas sólo en en \textit{espacios de configuraciones} euclídeos con obstáculos esféricos o con forma de estrella (Rimon and Koditschek 1989). Otra limitada solución es el \textit{método de restricción} de (Favverjon and Tournassoud 1987), que aunque admitía 8 GDL, en el espacio de trabajos los obstáculos son cilindros verticales, y se necesita la intervención humana.\\
+	
+	Los autores antes del presente trabajo plantearon una aproximación basada en potenciales usando \textbf{algoritmos de rastreo de valles} (Barraquand et al. 1989) para escapar de los mínimos locales. Este planificador funcionaba para robots de 10 GDL con una cadena cinemática no en serie. Pero era lento y poco confiable.\\
+	
+	Una de las principales ventajas del algoritmo propuesto en el artículo que estamos presentando es el uso de métodos de Monte-Carlo para salir de los mínimos locales, fue propuesto en otro artículo (\textit{Monte Carlo algorithm for path Planning With Many DoF}, Barraquand and Latombe 1990).\\
+		
+	Sobre algoritmos de generación de trayectorias para múltiples robots hasta la fecha habían sido incapaz de solucionar problemas en los que los robots interaccionaban fuertemente. (Schwartz and Sharir 1983c; Kant and Zucker 1986; Erdmann and Lozano-Pérez 1986; O'Donnell and Lozano-Pérez 1989).\\
+	
+	\section{Algoritmo Planteado}
+	
+	El algoritmo planteado en este artículo puede resumirse en las siguientes partes:
+	
+	\begin{enumerate}
+	\item \textbf{Discretizar} tanto el espacio de trabajo como el de configuraciones del robot en un bitmap y un malla jerárquicos.
+	\item Calcular numéricamente las funciones de navegación sobre el espacio de trabajo del robot y combinarlas en una buena \textbf{función potencial} en el espacio de configuraciones.
+	\item Construir y buscar en el grafo el mínimo local del potencial del espacio de configuraciones empleando una técnica eficiente para \textbf{escapar del mínimo}.
+	\end{enumerate}
+	
+	Para esta última parte se pueden emplear dos métodos, fuerza bruta, \textbf{Best-First planner}. El cuál puede resolver problemas con robots de hasta 3 grados de libertad y con muchos obstáculos y formas arbitrarias. El otro método es un método de Monte-Carlo, \textbf{Randomized Path Planner}. Resuelve gran variedad de problemas que caer fuera del alcanza de las capacidades de planificadores propuestos anteriormente.\\
+	
+	La parte más complicada del algoritmo es la definición de una \textbf{función de potencial}, que puede ser considerada como una pseudométrica que intenta estimar la distancia desde cualquier configuración hasta la meta. En muchas formulaciones, hay un \textit{término atractivo}, que es una métrica en C-Space que devuelve la distancia a la meta, y un \textit{término repulsivo}, que penaliza configuraciones que se acercan demasiado a los obstáculos. La construcción de funciones potenciales involucra mucha heurística, uno de los métodos más efectivos involucra construir funciones \textit{cost-to-go} sobre el espacio de tareas y llevarlo al espacio de configuraciones.\\
+	
+	El planificador puede ser descrito como una máquina de tres estados. Inicialmente, el planificados está en el modo \textit{Best First} emplea $q_I$ para iniciar un gradiente en descenso. Mientras en el modo \textit{Best First}, se selecciona el más nuevo vértice, $v$. Se crea un nuevo vértice, $v_n$, en la vecindad de $v$, en la dirección que minimice la función potencial. El muestreo direccional puede ser llevado a cabo seleccionando aleatoriamente o mediante muestras deterministas. Después de un número de intentos (otro parámetro), si no se consigue reducir la función potencia, entonces se cambia al modo \textit{Random Walk}, ya que la búsqueda \textit{best-first} se ha atascado en un mínimo local.\\
+	
+	En el modo \textit{Random Walk}, un \textit{random walk} es producido desde el vértice más nuevo. El \textit{random walk} termina si la función potencial es reducida o un límite específico de iteraciones es alcanzado. El límite es de hecho muestreado desde una variable aleatoria predeterminada (que contiene parámetros que también deben de ser seleccionados). Cuando el modo \textit{Random Walk} acaba, el modo es cambiado de nuevo al \textit{Best First}. Un contador se incrementa para contar el número de veces que el \textit{Random Walk} es intentado. Un parámetro $K$ determina el máximo numero de intentos. Cada \textit{Random Walk} se podría paralelizar y utilizar el resultado que mejor minimice la función potencial, reduciendo el tiempo transcurrido en modo \textit{Random Walk}. Si el \textit{Best First} falla después de $K$ \textit{random walks}, entonces el modo \textit{Backtrack} entra.\\
+	
+	El modo \textit{Trackback} selecciona un vértice aleatorio desde los vértices que fueron obtenidos durante un \textit{random walk}. Siguiendo esto, el contador es reiniciado, y el modo es cambiado de nuevo a \textit{Best-First}.
+	\section{Trabajo Posterior}
+	
+	La aproximación de \textit{Randomized Potential Fields} permite escapar de minimos locales de altas dimensiones, pero debido a la gran cantidad de parámetros heurísticos que han de ajustarse para cada problema este tipo de algoritmos fueron desechados por otros que no emplean tantos parámetros. Aún así el método fue muy influyente en otros algoritmos de planificación basados en el muestreo.\\
+	
+	Aparecieron los siguientes planificadores después de RPP que utilizan también algún tipo de aleatoriedad en su algoritmo:\\
+	
+	\textbf{Ariadne’s Clew algorithm:} Destaca por tener dos modos de funcionamiento que se van alternando. En el modo EXPLORE, se añaden nuevos vértices de búsqueda en el mapa y en el modo SEARCH, se busca pasando por los vértices añadidos una ruta entre el punto inicial y el punto final libre de obstáculos.\\
+	
+	\textbf{Expansive-space planner:} Es similar al modo EXPLORE del algoritmo anterior, en donde se genera nuevos vértices en zonas menos visitadas del mapa. Además utiliza la búsqueda bidireccional para lograr una mayor eficiencia.\\
+	
+	\textbf{Random-walk planner:} Se trata de un algoritmo eficiente que consiste en realizar movimientos aleatorios. Ajusta automáticamente los parámetros necesarios para cada movimiento basándose en los movimientos anteriores.\\
+	
+	\textbf{Rapidly Exploring Dense Trees:} Este algoritmo es el más usado en la actualidad y se basa en la construcción de un árbol de configuraciones que crece explorando a partir de un punto origen. El árbol cubre uniformemente todo el espacio de configuraciones libres de colisión a través de dos pasos.\\
+	
+	\textbf{Roadmap Methods for múltiple queries:} La finalidad de este algoritmo es construir un grafo topológico llamado \textit{roadmap}, que eficientemente solucione múltiples peticiones iniciales. Las trayectorias en el \textit{roadmap} deberían ser fácil de alcanzar para cada $q_I$ y $q_G$, y el grafo permita rápidas búsquedas de una solución.\\
+	
+ 	
+\end{document}
