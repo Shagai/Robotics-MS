@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.8)  14 DEC 2015 00:09
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.8)  14 DEC 2015 10:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1242,11 +1242,6 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
 [10
 
 ]
-
-LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 229.
-
-
 Overfull \hbox (129.84201pt too wide) has occurred while \output is active
  [][]  
  []
@@ -1259,6 +1254,11 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
 [11
 
 ]
+
+LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
+(Font)              using `OT1/cmss/bx/n' instead on input line 242.
+
+
 Overfull \hbox (129.84201pt too wide) has occurred while \output is active
  [][]  
  []
@@ -1270,18 +1270,30 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
 
 [12
 
-] <images/planner.png, id=372, 568.1225pt x 135.50626pt>
+]
+Overfull \hbox (129.84201pt too wide) has occurred while \output is active
+ [][]  
+ []
+
+
+Overfull \hbox (50.75336pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[13
+
+] <images/planner.png, id=399, 568.1225pt x 135.50626pt>
 File: images/planner.png Graphic file (type png)
 
 <use images/planner.png>
-Package pdftex.def Info: images/planner.png used on input line 258.
+Package pdftex.def Info: images/planner.png used on input line 271.
 (pdftex.def)             Requested size: 342.2953pt x 81.64552pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 258.
+LaTeX Font Info:    Try loading font information for U+msa on input line 271.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 258.
+LaTeX Font Info:    Try loading font information for U+msb on input line 271.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1295,21 +1307,9 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-[13
-
- <./images/planner.png>]
-Overfull \hbox (129.84201pt too wide) has occurred while \output is active
- [][]  
- []
-
-
-Overfull \hbox (50.75336pt too wide) has occurred while \output is active
- [][][][]  
- []
-
 [14
 
-]
+ <./images/planner.png>]
 Overfull \hbox (129.84201pt too wide) has occurred while \output is active
  [][]  
  []
@@ -1394,6 +1394,18 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
 [21
 
 ]
+Overfull \hbox (129.84201pt too wide) has occurred while \output is active
+ [][]  
+ []
+
+
+Overfull \hbox (50.75336pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[22
+
+]
 \tf@nav=\write6
 \openout6 = `Presentation.nav'.
 
@@ -1403,16 +1415,16 @@ Overfull \hbox (50.75336pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 331.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 331.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 344.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 344.
  (./Presentation.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 LaTeX Info: Redefining \. on input line 29.
 LaTeX Info: Redefining \% on input line 29.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 331.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 331.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 344.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 344.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 95800C4BF64938500D1994C3E10CB0A9;208.
 
@@ -1423,13 +1435,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 331.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 344.
  ) 
 Here is how much of TeX's memory you used:
- 16715 strings out of 493304
- 305678 string characters out of 6139871
- 388245 words of memory out of 5000000
- 19717 multiletter control sequences out of 15000+600000
+ 16719 strings out of 493304
+ 305713 string characters out of 6139871
+ 388247 words of memory out of 5000000
+ 19719 multiletter control sequences out of 15000+600000
  12119 words of font info for 44 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  49i,16n,60p,401b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1441,10 +1453,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmssi8.pfb>
-Output written on Presentation.pdf (21 pages, 150641 bytes).
+Output written on Presentation.pdf (22 pages, 152667 bytes).
 PDF statistics:
- 654 PDF objects out of 1000 (max. 8388607)
- 601 compressed objects within 7 object streams
- 48 named destinations out of 1000 (max. 500000)
+ 681 PDF objects out of 1000 (max. 8388607)
+ 627 compressed objects within 7 object streams
+ 50 named destinations out of 1000 (max. 500000)
  116 words of extra memory for PDF output out of 10000 (max. 10000000)
 

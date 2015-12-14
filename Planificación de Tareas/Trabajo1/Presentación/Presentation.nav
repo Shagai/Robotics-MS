@@ -8,11 +8,11 @@
 \headcommand {\beamer@subsectionpages {1}{2}}
 \headcommand {\slideentry {1}{0}{3}{3/3}{}{0}}
 \headcommand {\beamer@framepages {3}{3}}
-\headcommand {\sectionentry {2}{Trabajo Previo}{4}{Trabajo Previo}{0}}
-\headcommand {\beamer@sectionpages {3}{3}}
-\headcommand {\beamer@subsectionpages {3}{3}}
-\headcommand {\slideentry {2}{0}{4}{4/4}{}{0}}
+\headcommand {\slideentry {1}{0}{4}{4/4}{}{0}}
 \headcommand {\beamer@framepages {4}{4}}
+\headcommand {\sectionentry {2}{Trabajo Previo}{5}{Trabajo Previo}{0}}
+\headcommand {\beamer@sectionpages {3}{4}}
+\headcommand {\beamer@subsectionpages {3}{4}}
 \headcommand {\slideentry {2}{0}{5}{5/5}{}{0}}
 \headcommand {\beamer@framepages {5}{5}}
 \headcommand {\slideentry {2}{0}{6}{6/6}{}{0}}
@@ -25,20 +25,20 @@
 \headcommand {\beamer@framepages {9}{9}}
 \headcommand {\slideentry {2}{0}{10}{10/10}{}{0}}
 \headcommand {\beamer@framepages {10}{10}}
-\headcommand {\sectionentry {3}{Algoritmo Planteado}{11}{Algoritmo Planteado}{0}}
-\headcommand {\beamer@sectionpages {4}{10}}
-\headcommand {\beamer@subsectionpages {4}{10}}
-\headcommand {\slideentry {3}{0}{11}{11/11}{}{0}}
+\headcommand {\slideentry {2}{0}{11}{11/11}{}{0}}
 \headcommand {\beamer@framepages {11}{11}}
+\headcommand {\sectionentry {3}{Algoritmo Planteado}{12}{Algoritmo Planteado}{0}}
+\headcommand {\beamer@sectionpages {5}{11}}
+\headcommand {\beamer@subsectionpages {5}{11}}
 \headcommand {\slideentry {3}{0}{12}{12/12}{}{0}}
 \headcommand {\beamer@framepages {12}{12}}
 \headcommand {\slideentry {3}{0}{13}{13/13}{}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\sectionentry {4}{Trabajos Posteriores}{14}{Trabajos Posteriores}{0}}
-\headcommand {\beamer@sectionpages {11}{13}}
-\headcommand {\beamer@subsectionpages {11}{13}}
-\headcommand {\slideentry {4}{0}{14}{14/14}{}{0}}
+\headcommand {\slideentry {3}{0}{14}{14/14}{}{0}}
 \headcommand {\beamer@framepages {14}{14}}
+\headcommand {\sectionentry {4}{Trabajos Posteriores}{15}{Trabajos Posteriores}{0}}
+\headcommand {\beamer@sectionpages {12}{14}}
+\headcommand {\beamer@subsectionpages {12}{14}}
 \headcommand {\slideentry {4}{0}{15}{15/15}{}{0}}
 \headcommand {\beamer@framepages {15}{15}}
 \headcommand {\slideentry {4}{0}{16}{16/16}{}{0}}
@@ -49,10 +49,12 @@
 \headcommand {\beamer@framepages {18}{18}}
 \headcommand {\slideentry {4}{0}{19}{19/19}{}{0}}
 \headcommand {\beamer@framepages {19}{19}}
-\headcommand {\slideentry {4}{0}{20}{20/21}{}{0}}
-\headcommand {\beamer@framepages {20}{21}}
-\headcommand {\beamer@partpages {1}{21}}
-\headcommand {\beamer@subsectionpages {14}{21}}
-\headcommand {\beamer@sectionpages {14}{21}}
-\headcommand {\beamer@documentpages {21}}
-\headcommand {\def \inserttotalframenumber {20}}
+\headcommand {\slideentry {4}{0}{20}{20/20}{}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\slideentry {4}{0}{21}{21/22}{}{0}}
+\headcommand {\beamer@framepages {21}{22}}
+\headcommand {\beamer@partpages {1}{22}}
+\headcommand {\beamer@subsectionpages {15}{22}}
+\headcommand {\beamer@sectionpages {15}{22}}
+\headcommand {\beamer@documentpages {22}}
+\headcommand {\def \inserttotalframenumber {21}}
